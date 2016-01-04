@@ -3,16 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>js_doodle_jump</title>
+	<link rel="stylesheet" type="text/css" href="media/css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="media/css/style.css"/>
 </head>
 <body>
 
+<div class="doodle"></div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="media/js/engine.js"></script>
 <script type="text/javascript">
 	(function($) {
-		$(document).on('ready', function() {
+		$(document).ready(function() {
 			$('body').height($(window).height());
+			$('.doodle').doodleInit();
 		})
 	})(jQuery);
 </script>
