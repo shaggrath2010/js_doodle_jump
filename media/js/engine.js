@@ -11,28 +11,45 @@
 	function Engine() {
 		var state = this,
 			doodle,
-			speed = 500;
+			gameArea,
+			speed = 500,
+			jumpHeight = 400,
+			controlStep = 100;
 		state.init = function (obj) {
 			doodle = obj;
+			gameArea = doodle.parent();
 			state.physics.jump(doodle);
 			state.control.keyPressDetector();
 		};
 		state.physics = {
 			jump: function (obj) {
-				var bottomHeight = parseInt(obj.css('bottom')),
-					jumpHeight = 200;
+				var bottomHeight = parseInt(obj.css('bottom'));
 				var timer = setInterval(function () {
 					if (jumpHeight === bottomHeight) {
 						bottomHeight = 0;
 						obj.animate({
 							bottom: bottomHeight
-						}, speed, "easeInQuad", function () {
+						}, {
+							duration: speed,
+							easing: "easeInQuad",
+							step: function (now, fx) {
+
+							},
+							done: function () {
+							}
 						});
 					} else {
 						bottomHeight = jumpHeight;
 						obj.animate({
 							bottom: bottomHeight
-						}, speed, "easeOutQuad", function () {
+						}, {
+							duration: speed,
+							easing: "easeOutQuad",
+							step: function (now, fx) {
+
+							},
+							done: function () {
+							}
 						});
 					}
 				}, speed);
@@ -61,10 +78,30 @@
 				});
 			},
 			keyLeft: function () {
-				doodle.css('left', parseInt(doodle.css('left')) - 100);
+				var left = parseInt(doodle.css('left'));
+				//must be refactoring
+				doodle.css('left', left - controlStep);
+
+				if (left < doodle.width()) {
+					doodle.css('transition', 'none');
+					doodle.css('left', gameArea.width() - (doodle.width() / 2));
+					setTimeout(function () {
+						doodle.css('transition', '');
+					}, 100);
+				}
 			},
 			keyRight: function () {
-				doodle.css('left', parseInt(doodle.css('left')) + 100);
+				var left = parseInt(doodle.css('left'));
+				//must be refactoring
+				doodle.css('left', left + controlStep);
+				
+				if (left > (gameArea.width() - doodle.width())) {
+					doodle.css('transition', 'none');
+					doodle.css('left', (doodle.width() / 2) * -1);
+					setTimeout(function () {
+						doodle.css('transition', '');
+					}, 100);
+				}
 			},
 			keyUp: function () {
 
