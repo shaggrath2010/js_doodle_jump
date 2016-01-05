@@ -1,8 +1,13 @@
-body {
-  width: 100%;
+.doodle_area {
   height: 100%;
+  width: 500px;
+  position: relative;
+  background-image: url("../img/kletk.png");
+  margin: 0 auto;
+  border-left: 1px solid #ff514d;
+  border-right: 1px solid #ff514d;
 }
-.doodle {
+.doodle_area .doodle {
   width: 50px;
   height: 150px;
   background-color: aquamarine;
@@ -10,4 +15,6 @@ body {
   bottom: 0px;
   left: -webkit-calc(50% - 25px);
   left: calc(50% - 25px);
+  -webkit-transition: left 0.1s linear;
+          transition: left 0.1s linear;
 }

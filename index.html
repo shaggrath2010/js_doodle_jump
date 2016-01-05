@@ -4,17 +4,21 @@
 	<meta charset="UTF-8">
 	<title>js_doodle_jump</title>
 	<link rel="stylesheet" type="text/css" href="media/css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="media/css/jquery-ui.min.css"/>
+	<link rel="stylesheet" type="text/css" href="media/css/jquery-ui.structure.min.css"/>
 	<link rel="stylesheet" type="text/css" href="media/css/style.css"/>
 </head>
 <body>
-
-<div class="doodle"></div>
+<div class="doodle_area">
+	<div class="doodle"></div>
+</div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="media/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="media/js/engine.js"></script>
 <script type="text/javascript">
-	(function($) {
-		$(document).ready(function() {
+	(function ($) {
+		$(document).ready(function () {
 			$('body').height($(window).height());
 			$('.doodle').doodleInit();
 		})

@@ -1,32 +1,74 @@
 /*global jQuery*/
 "use strict";
-(function($) {
+(function ($) {
 	var engine = new Engine();
 	$.fn.extend({
-		doodleInit: function() {
-			engine.physics.jump(this);
+		doodleInit: function () {
+			engine.init(this);
 		}
 	});
 
 	function Engine() {
-		var state = this;
-		state.physics = {};
-		state.physics.jump = function(obj) {
-			var bottomHeight = parseInt(obj.css('bottom')),
-				jumpHeight = 200,
-				speed = 500;
-			console.log(speed / 1000);
-			var timer = setInterval(function() {
-				if (jumpHeight === bottomHeight) {
+		var state = this,
+			doodle,
+			speed = 500;
+		state.init = function (obj) {
+			doodle = obj;
+			state.physics.jump(doodle);
+			state.control.keyPressDetector();
+		};
+		state.physics = {
+			jump: function (obj) {
+				var bottomHeight = parseInt(obj.css('bottom')),
+					jumpHeight = 200;
+				var timer = setInterval(function () {
+					if (jumpHeight === bottomHeight) {
+						bottomHeight = 0;
+						obj.animate({
+							bottom: bottomHeight
+						}, speed, "easeInQuad", function () {
+						});
+					} else {
+						bottomHeight = jumpHeight;
+						obj.animate({
+							bottom: bottomHeight
+						}, speed, "easeOutQuad", function () {
+						});
+					}
+				}, speed);
+			}
+		};
+		state.control = {
+			keyPressDetector: function () {
+				var control = this;
+				$(window).on("keydown", function (event) {
+					switch (event.keyCode) {
+						//left
+						case 37:
+							control.keyLeft();
+							break;
+						//right
+						case 39:
+							control.keyRight();
+							break;
+						//up
+						case 38:
+							control.keyUp();
+							break;
+						default:
+							break;
+					}
+				});
+			},
+			keyLeft: function () {
+				doodle.css('left', parseInt(doodle.css('left')) - 100);
+			},
+			keyRight: function () {
+				doodle.css('left', parseInt(doodle.css('left')) + 100);
+			},
+			keyUp: function () {
 
-					obj.attr('style', 'transition: bottom ' + speed / 1000 + 's ease-in;');
-					bottomHeight = 0;
-				} else {
-					obj.attr('style', 'transition: bottom ' + speed / 1000 + 's ease-out;');
-					bottomHeight = jumpHeight;
-				}
-				obj.css('bottom', bottomHeight);
-			}, speed * 1.04);
+			}
 		};
 	}
 })(jQuery);
