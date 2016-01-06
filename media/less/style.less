@@ -1,13 +1,20 @@
-body {
-  width: 100%;
+.doodle_area {
   height: 100%;
+  width: 500px;
+  position: relative;
+  background-image: url("../img/kletk.png");
+  margin: 0 auto;
+  border-left: 1px solid #ff514d;
+  border-right: 1px solid #ff514d;
+  overflow: hidden;
+  .doodle {
+	width: 50px;
+	height: 150px;
+	background-color: aquamarine;
+	position: absolute;
+	bottom: 0;
+	left: ~'calc(50% - 25px)';
+	transition: left 0.1s linear;
+  }
 }
 
-.doodle {
-  width: 50px;
-  height: 150px;
-  background-color: aquamarine;
-  position: absolute;
-  bottom: 0px;
-  left: ~'calc(50% - 25px)';
-}
